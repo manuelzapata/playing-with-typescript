@@ -27,7 +27,7 @@
                     <span id="total" data-bind="text: paid"></span>
                 </h4>
                 <div data-bind="foreach: acceptedCoins">
-                    <img data-bind="attr: {src: getImageUrl(), alt: Value}, click: $parent.acceptCoin" />
+                    <img data-bind="attr: {src: getImageUrl(), alt: value}, click: $parent.acceptCoin" width="128" height="128" />
                 </div>
 
                 <h3 data-bind="with: selectedCell">
