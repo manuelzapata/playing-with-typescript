@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "outFile": "../js/app.js",
-        "sourceMap": true
+        //"outFile": "../js/app.js",
+        "sourceMap": true,
+        "outDir": "../js",
+        "module": "amd"
     }
 }

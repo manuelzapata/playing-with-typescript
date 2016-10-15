@@ -1,10 +1,8 @@
-/// <reference path="coin.ts" />
-/// <reference path="product.ts" />
-/// <reference path="productFactory.ts" />
+import getVendingProduct from "./productFactory";
+import {Product, Initial as Init} from "./product";
+import * as Coins from "./coin";
 
-
-
-enum VendingMachineSize {
+export enum VendingMachineSize {
     small = 6,
     medium = 9,
     large = 12
@@ -19,12 +17,12 @@ class Cell {
     sold = ko.observable(false);
 }
 
-class VendingMachine{
+export class VendingMachine{
     
     private paid = ko.observable(0);
-    selectedCell = ko.observable(new Cell(new Initial()));
+    selectedCell = ko.observable(new Cell(new Init()));
     cells = ko.observableArray([]);
-    acceptedCoins: Coin[] = [new Dime(), new Quarter(), new Half(), new Dollar()];
+    acceptedCoins: Coins.Coin[] = [new Coins.Dime(), new Coins.Quarter(), new Coins.Half(), new Coins.Dollar()];
     canPay = ko.pureComputed(() => this.paid() - this.selectedCell().product.price >= 0);
 
     set size(givenSize: VendingMachineSize){
@@ -32,7 +30,7 @@ class VendingMachine{
         this.cells([]);
 
         for (let index=0; index < givenSize; index++) {
-            let product = ProductFactory.GetProduct();
+            let product = getVendingProduct();
             this.cells.push(new Cell(product));
         }
     }
@@ -43,7 +41,7 @@ class VendingMachine{
     }
 
     //Arrow function
-    acceptCoin = (coin: Quarter): void => {
+    acceptCoin = (coin: Coins.Coin): void => {
         let oldTotal = this.paid();
         this.paid(oldTotal + coin.value);
     }
